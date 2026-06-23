@@ -1,0 +1,33 @@
+<div class="success" [attr.data-testid]="sel.root">
+  <div class="success__body">
+    <div class="success__icon-wrap" [attr.data-testid]="sel.icon">
+      <div class="success__icon-circle">
+        <ex-icon name="check" color="#ffffff" [size]="40" />
+      </div>
+    </div>
+
+    <ex-title
+      [title]="msg.heading"
+      [subtitle]="msg.body"
+    />
+
+    <div class="success__pill">
+      <div class="success__pill-avatar">
+        <ex-icon name="profile" color="#ffffff" [size]="20" />
+      </div>
+      <div class="success__pill-text">
+        <span class="success__pill-label">{{ msg.pillLabel }}</span>
+        <span class="success__pill-email" [attr.data-testid]="sel.email">{{ flowState.email() }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="success__footer">
+    <ex-button
+      variant="primary"
+      class="success__finish"
+      [attr.data-testid]="sel.finish"
+      (click)="finish()"
+    >{{ msg.finish }}</ex-button>
+  </div>
+</div>

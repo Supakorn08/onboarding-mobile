@@ -1,0 +1,37 @@
+:host {
+  display: block;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.landing {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+}
+
+.landing__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6, 24px);
+  padding: var(--space-8, 32px) var(--space-6, 24px) var(--space-6, 24px);
+  flex: 0 0 auto;
+}
+
+.landing__logo {
+  display: flex;
+  align-items: center;
+}
+
+.landing__logo-img {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
+.landing__cta {
+  display: block;
+  width: 100%;
+}

@@ -1,0 +1,19 @@
+<div class="landing" [attr.data-testid]="sel.root">
+  <div class="landing__content">
+    <div class="landing__logo">
+      <img src="exim-logo.png" alt="EXIM Thailand" class="landing__logo-img" />
+    </div>
+
+    <ex-title
+      [title]="msg.heading"
+      [subtitle]="msg.description"
+    />
+
+    <ex-button
+      variant="primary"
+      class="landing__cta"
+      [attr.data-testid]="sel.cta"
+      (click)="proceed()"
+    >{{ msg.cta }}</ex-button>
+  </div>
+</div>
