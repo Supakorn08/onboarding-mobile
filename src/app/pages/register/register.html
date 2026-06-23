@@ -1,0 +1,63 @@
+<div class="register" [attr.data-testid]="sel.root">
+  <app-top-bar
+    [title]="msg.topbarTitle"
+    [showBack]="true"
+    (back)="goBack()"
+  />
+
+  <div class="register__content">
+    <div class="register__header">
+      <h2 class="register__heading">{{ msg.heading }}</h2>
+      <p class="register__subtext">{{ msg.subtext }}</p>
+    </div>
+
+    <div class="register__fields">
+      <ex-input-field
+        [label]="msg.emailLabel"
+        [placeholder]="msg.emailPlaceholder"
+        [error]="!!state.emailError()"
+        [helperText]="state.emailError() ?? ''"
+        [attr.data-testid]="sel.emailField"
+        (valueChange)="state.email.set($event)"
+      />
+
+      <ex-input-field
+        [label]="msg.idLabel"
+        [placeholder]="msg.idPlaceholder"
+        [helperText]="state.idError() ?? msg.idHelper"
+        [error]="!!state.idError()"
+        [attr.data-testid]="sel.idField"
+        (valueChange)="state.juristicId.set($event)"
+      />
+    </div>
+
+    <ex-button
+      variant="primary"
+      width="100%"
+      [disabled]="state.isLoading() || !state.email() || !state.juristicId()"
+      [loading]="state.isLoading()"
+      [attr.data-testid]="sel.submitButton"
+      (click)="state.submit()"
+    >{{ msg.submitButton }}</ex-button>
+  </div>
+
+  <app-result-modal
+    [open]="state.modal() === 'not-found'"
+    variant="not-found"
+    [heading]="msg.modalNotFound.heading"
+    [body]="msg.modalNotFound.body"
+    [buttonText]="msg.modalNotFound.button"
+    (confirm)="state.closeModal()"
+    (closed)="state.closeModal()"
+  />
+
+  <app-result-modal
+    [open]="state.modal() === 'not-linked'"
+    variant="not-linked"
+    [heading]="msg.modalNotLinked.heading"
+    [body]="msg.modalNotLinked.body"
+    [buttonText]="msg.modalNotLinked.button"
+    (confirm)="state.closeModal()"
+    (closed)="state.closeModal()"
+  />
+</div>

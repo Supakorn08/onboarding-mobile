@@ -1,0 +1,47 @@
+:host {
+  display: block;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.register {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+}
+
+.register__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6, 24px);
+  padding: var(--space-6, 24px) var(--space-6, 24px) var(--space-8, 32px);
+  flex: 1;
+}
+
+.register__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 8px);
+}
+
+.register__heading {
+  margin: 0;
+  font-size: var(--text-size-h4, 20px);
+  font-weight: 600;
+  color: var(--semantic-color-text-primary, #1a1a1a);
+}
+
+.register__subtext {
+  margin: 0;
+  font-size: var(--text-size-body-sm, 14px);
+  color: var(--semantic-color-text-secondary, #666);
+  line-height: 1.5;
+}
+
+.register__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+}
