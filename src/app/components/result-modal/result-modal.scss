@@ -1,0 +1,27 @@
+.result-modal__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0 4px;
+  text-align: center;
+}
+
+.result-modal__icon {
+  font-size: 48px;
+  color: var(--semantic-color-primary-default, #034ea1);
+}
+
+.result-modal__heading {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--semantic-color-neutral-text-default, #1a1a1a);
+}
+
+.result-modal__text {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--semantic-color-neutral-text-subtle, #666);
+  line-height: 1.5;
+}

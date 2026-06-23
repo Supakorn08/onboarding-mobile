@@ -1,0 +1,57 @@
+@if (useMock) {
+  <div class="mock-hint">
+    <button class="mock-hint__toggle" (click)="toggle()" type="button">
+      🧪 Mock Triggers {{ expanded() ? '▲' : '▼' }}
+    </button>
+    @if (expanded()) {
+      <div class="mock-hint__body">
+        <table class="mock-hint__table">
+          <thead>
+            <tr>
+              <th>State</th>
+              <th>Trigger</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Eligible (happy path)</td>
+              <td><code>0105563000012</code> + <code>test&#64;superapp.com</code></td>
+            </tr>
+            <tr>
+              <td>Email ไม่มีในระบบ (inline)</td>
+              <td><code>notfound&#64;example.com</code></td>
+            </tr>
+            <tr>
+              <td>นิติบุคคลไม่มีในระบบ (inline)</td>
+              <td>id <code>1111111111111</code></td>
+            </tr>
+            <tr>
+              <td>ไม่พบข้อมูล (modal)</td>
+              <td>id <code>0000000000000</code></td>
+            </tr>
+            <tr>
+              <td>Email ไม่เชื่อมนิติบุคคล (modal)</td>
+              <td><code>notlinked&#64;example.com</code></td>
+            </tr>
+            <tr>
+              <td>OTP ถูก → Terms</td>
+              <td><code>12345678</code></td>
+            </tr>
+            <tr>
+              <td>OTP หมดอายุ (inline)</td>
+              <td><code>00000000</code></td>
+            </tr>
+            <tr>
+              <td>OTP ผิด (inline นับครั้ง)</td>
+              <td>code อื่นใดๆ</td>
+            </tr>
+            <tr>
+              <td>OTP เกินครั้ง (modal)</td>
+              <td>ผิดครบ 3 ครั้ง</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+}

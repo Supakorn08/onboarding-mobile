@@ -1,0 +1,13 @@
+<div class="top-bar">
+  @if (showBack()) {
+    <ex-icon-button
+      name="chevron-left"
+      class="top-bar__back"
+      (clicked)="back.emit()"
+    />
+  } @else {
+    <span class="top-bar__back-placeholder"></span>
+  }
+  <span class="top-bar__title">{{ title() }}</span>
+  <span class="top-bar__spacer"></span>
+</div>

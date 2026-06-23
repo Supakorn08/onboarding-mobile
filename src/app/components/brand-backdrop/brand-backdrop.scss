@@ -1,0 +1,44 @@
+:host {
+  display: block;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.brand-backdrop {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.brand-backdrop__circle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--semantic-color-primary-default, #034ea1);
+  opacity: 0.08;
+}
+
+.brand-backdrop__circle--1 {
+  width: 320px;
+  height: 320px;
+  bottom: -80px;
+  right: -80px;
+}
+
+.brand-backdrop__circle--2 {
+  width: 200px;
+  height: 200px;
+  bottom: 60px;
+  right: -60px;
+  opacity: 0.05;
+}
+
+.brand-backdrop__circle--3 {
+  width: 140px;
+  height: 140px;
+  bottom: -40px;
+  left: -40px;
+  opacity: 0.06;
+}

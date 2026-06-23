@@ -1,0 +1,12 @@
+<ex-modal
+  [isOpen]="open()"
+  [rightButton]="rightBtn()"
+  position="bottom-center"
+  (closed)="closed.emit()"
+>
+  <div class="result-modal__body">
+    <ex-icon [name]="iconName()" class="result-modal__icon" />
+    <h3 class="result-modal__heading">{{ heading() }}</h3>
+    <p class="result-modal__text">{{ body() }}</p>
+  </div>
+</ex-modal>
