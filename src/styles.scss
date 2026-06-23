@@ -1,0 +1,13 @@
+/* ng-zorro base first, then EXIM design tokens (mirrors HostApp order) */
+@import 'ng-zorro-antd/ng-zorro-antd.min.css';
+@import '@exim/ui-kit/dist/css/design-tokens.css';
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+* {
+  font-family: var(--font-families-base);
+}

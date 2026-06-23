@@ -19,7 +19,15 @@
 3. **`gh` CLI not installed; no Cloudflare/Azure tokens on this machine.** CI (`deploy.yml`) will be **red on every push until the user sets 3 GitHub secrets** (`AZURE_ARTIFACTS_TOKEN`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`). This is expected, not a break — state it in the summary.
 4. **Repo already exists** with `.git`, `README.md`, `docs/` on branch `main`. Scaffold without clobbering these (Task 1).
 5. **Commit + push to `main` after each task** (greenfield repo, CI deploys from main).
-6. **Karma headless:** Chrome IS installed (`C:\Program Files\Google\Chrome\Application\chrome.exe`). If `ng test` can't find it, prefix the command with `CHROME_BIN="/c/Program Files/Google/Chrome/Application/chrome.exe"`. Task 2 verifies the test runner launches before any TDD task relies on it.
+6. **Test runner = vitest + jsdom** (Angular 21 scaffold uses `@angular/build:unit-test` → vitest, NOT Karma/Chrome). Run `npx ng test --watch=false` (runs all specs; fast; no browser). Specs use jasmine-style `describe/it/expect` globals (vitest-compatible). No karma/jasmine deps. Verified working (1 spec passing).
+
+### Implementation adaptations (applied during foundation execution — supersede earlier task text)
+
+- **Angular 21 is zoneless by default; ng-zorro needs Zone** → added `zone.js` dep + `import 'zone.js'` in `main.ts` + `provideZoneChangeDetection({ eventCoalescing: true })` in `app.config.ts` (mirrors HostApp).
+- **All `@angular/*` pinned `^21.1.0`** (not `~`) to avoid compiler/compiler-cli peer conflict (resolves to 21.2.x uniformly). `ng-zorro-antd ^21.1.0`, `@angular/cdk ^21.1.3`.
+- **Test stack = vitest/jsdom** (devDeps `vitest`, `jsdom`); dropped karma/jasmine from the plan's package.json.
+- **`ng build` default configuration = production** (scaffold sets `defaultConfiguration: production`); output `dist/onboarding-mobile/browser`. Production budgets raised (initial 3mb/6mb) for ng-zorro + tokens CSS.
+- **Foundation (Tasks 1–3) COMPLETE & verified** (build ✅, vitest ✅). Subagents start at Task 4. `app.routes.ts` exports `appRoutes` (empty until T8); `app.config.ts` already wired.
 7. **Pinned `@exim/ui-kit` APIs (from vendored `types/exim-ui-kit.d.ts`, v1.5.2 — re-confirm if 1.6.10 differs):**
    - `ex-input-field`: `ControlValueAccessor` (so `[(ngModel)]` works) + `valueChange: output<string>` + `value: WritableSignal<string>`; inputs `label`, `placeholder`, `helperText`, `error: boolean`, `size: 'small'|'large'|'medium'`, `leftIcon`/`rightIcon`, `maxlength`. (No separate error-text input — set `helperText` + `error=true` for red.)
    - `ex-modal`: `isOpen: boolean` (NOT `open`), `leftButton`/`rightButton: ModalButton`, `closeOnBackdrop`, `closeOnEscape`, `width`, `position: ModalPosition`, `(closed)` output; modal body via **`<ng-content>`** (no heading/body inputs).
