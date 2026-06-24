@@ -37,6 +37,20 @@ jobs:
             echo "//pkgs.dev.azure.com/eximth/_packaging/eximth/npm/:email=npm@exim.go.th"
           } > .npmrc
 
+      - name: Diagnose Azure Artifacts auth
+        env:
+          AZ_PAT: ${{ secrets.AZURE_ARTIFACTS_TOKEN }}
+        run: |
+          echo "::group::Azure Artifacts auth diagnostics"
+          echo "secret length = ${#AZ_PAT}  (raw Azure DevOps PAT is ~52 chars; base64 is ~72)"
+          URL="https://pkgs.dev.azure.com/eximth/_packaging/eximth/npm/registry/@exim%2Fui-kit"
+          echo -n "Basic  (eximth:rawPAT)    -> "; curl -s -o /dev/null -w "%{http_code}\n" -u "eximth:$AZ_PAT" "$URL" || echo "curl-fail"
+          echo -n "Bearer (rawPAT)           -> "; curl -s -o /dev/null -w "%{http_code}\n" -H "Authorization: Bearer $AZ_PAT" "$URL" || echo "curl-fail"
+          B64=$(printf '%s' "$AZ_PAT" | base64 -w0)
+          echo -n "Bearer (base64-of-secret) -> "; curl -s -o /dev/null -w "%{http_code}\n" -H "Authorization: Bearer $B64" "$URL" || echo "curl-fail"
+          echo "(200=ok, 401=auth-fail, 404=auth-ok-wrong-path)"
+          echo "::endgroup::"
+
       - name: Install dependencies
         run: npm install
 
