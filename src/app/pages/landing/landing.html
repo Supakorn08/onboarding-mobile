@@ -4,13 +4,14 @@
       <img src="exim-logo.png" alt="EXIM Thailand" class="landing__logo-img" />
     </div>
 
-    <ex-title
-      [title]="msg.heading"
-      [subtitle]="msg.description"
-    />
+    <div class="landing__header">
+      <h1 class="landing__heading">{{ msg.heading }}</h1>
+      <p class="landing__description">{{ msg.description }}</p>
+    </div>
 
     <ex-button
       variant="primary"
+      width="100%"
       class="landing__cta"
       [attr.data-testid]="sel.cta"
       (click)="proceed()"

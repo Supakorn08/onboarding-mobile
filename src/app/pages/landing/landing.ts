@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ButtonComponent, TitleComponent } from '@exim/ui-kit';
+import { ButtonComponent } from '@exim/ui-kit';
 import { LANDING_MESSAGES } from './landing.message';
 import { LANDING_SELECTORS } from './landing.selector';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [ButtonComponent, TitleComponent],
+  imports: [ButtonComponent],
   templateUrl: './landing.html',
   styleUrl: './landing.scss',
 })

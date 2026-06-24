@@ -1,3 +1,10 @@
+:host {
+  display: block;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
 .otp {
   display: flex;
   flex-direction: column;
@@ -8,8 +15,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-4, 16px);
-  padding: var(--space-6, 24px);
+  // narrower horizontal padding on small phones so the 8 OTP boxes fit within 375px
+  padding: var(--space-6, 24px) clamp(12px, 3vw, 24px);
   flex: 1;
+  min-width: 0;
 }
 
 .otp__heading {
@@ -32,7 +41,13 @@
 
 .otp__input {
   display: block;
+  width: 100%;
+  min-width: 0;
   margin-top: var(--space-2, 8px);
+  // ex-input-otp renders 8 fixed-size boxes at a ~440px natural width which
+  // overflows narrow phones; scale down (anchored left) so all 8 stay visible.
+  transform: scale(0.8);
+  transform-origin: top left;
 }
 
 .otp__alert {

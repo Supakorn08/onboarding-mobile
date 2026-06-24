@@ -6,6 +6,15 @@ html,
 body {
   margin: 0;
   height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* app-root is a custom element (default display:inline). Force block so the
+   layout's width:100% resolves against the viewport, not shrink-to-fit content. */
+app-root {
+  display: block;
+  width: 100%;
 }
 
 * {

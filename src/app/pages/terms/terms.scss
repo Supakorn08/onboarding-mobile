@@ -1,3 +1,10 @@
+:host {
+  display: block;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
 .terms {
   display: flex;
   flex-direction: column;
