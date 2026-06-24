@@ -17,6 +17,11 @@
   cursor: pointer;
   font-size: 0.75rem;
   font-family: inherit;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+  .mock-hint--api & {
+    background: #197d3f;
+  }
 }
 
 .mock-hint__body {
@@ -28,6 +33,51 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   max-height: 320px;
   overflow-y: auto;
+}
+
+.mock-hint__modes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.mock-hint__modes-label {
+  font-weight: 700;
+}
+
+.mock-hint__switch {
+  display: inline-flex;
+  border: 1px solid #034ea1;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.mock-hint__mode {
+  background: #fff;
+  color: #034ea1;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-family: inherit;
+
+  &--active {
+    background: #034ea1;
+    color: #fff;
+  }
+}
+
+.mock-hint__api-note {
+  margin: 0;
+  line-height: 1.5;
+
+  code {
+    background: #eef;
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-size: 0.65rem;
+  }
 }
 
 .mock-hint__table {

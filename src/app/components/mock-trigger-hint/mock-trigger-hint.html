@@ -1,10 +1,29 @@
-@if (useMock) {
-  <div class="mock-hint">
-    <button class="mock-hint__toggle" (click)="toggle()" type="button">
-      🧪 Mock Triggers {{ expanded() ? '▲' : '▼' }}
-    </button>
-    @if (expanded()) {
-      <div class="mock-hint__body">
+<div class="mock-hint" [class.mock-hint--api]="!useMock()">
+  <button class="mock-hint__toggle" (click)="toggleExpand()" type="button">
+    {{ useMock() ? '🧪 Mock' : '🌐 API จริง' }} {{ expanded() ? '▲' : '▼' }}
+  </button>
+
+  @if (expanded()) {
+    <div class="mock-hint__body">
+      <div class="mock-hint__modes">
+        <span class="mock-hint__modes-label">โหมดข้อมูล</span>
+        <div class="mock-hint__switch">
+          <button
+            type="button"
+            class="mock-hint__mode"
+            [class.mock-hint__mode--active]="useMock()"
+            (click)="setMock(true)"
+          >🧪 Mock</button>
+          <button
+            type="button"
+            class="mock-hint__mode"
+            [class.mock-hint__mode--active]="!useMock()"
+            (click)="setMock(false)"
+          >🌐 API จริง</button>
+        </div>
+      </div>
+
+      @if (useMock()) {
         <table class="mock-hint__table">
           <thead>
             <tr>
@@ -51,7 +70,12 @@
             </tr>
           </tbody>
         </table>
-      </div>
-    }
-  </div>
-}
+      } @else {
+        <p class="mock-hint__api-note">
+          ยิง API จริงตาม <code>environment.servicePaths</code> — ตอนนี้ยังเป็น placeholder ว่าง
+          เติม <code>baseDomain</code> / <code>onboarding</code> ในไฟล์ environment ก่อน แล้ว reload ถึงจะเรียกได้จริง
+        </p>
+      }
+    </div>
+  }
+</div>

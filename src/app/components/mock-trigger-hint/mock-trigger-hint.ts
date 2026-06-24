@@ -1,5 +1,5 @@
-import { Component, signal } from '@angular/core';
-import { environment } from '../../../environments/environments';
+import { Component, inject, signal } from '@angular/core';
+import { AppModeState } from '../../state/app-mode.state';
 
 @Component({
   selector: 'app-mock-trigger-hint',
@@ -9,10 +9,15 @@ import { environment } from '../../../environments/environments';
   styleUrl: './mock-trigger-hint.scss',
 })
 export class MockTriggerHint {
-  protected readonly useMock = environment.useMock;
+  private readonly mode = inject(AppModeState);
+  protected readonly useMock = this.mode.useMock;
   protected readonly expanded = signal(false);
 
-  protected toggle(): void {
+  protected toggleExpand(): void {
     this.expanded.update((v) => !v);
+  }
+
+  protected setMock(value: boolean): void {
+    this.mode.setMock(value);
   }
 }
