@@ -1,0 +1,57 @@
+<div class="otp" [attr.data-testid]="sel.root">
+  <app-top-bar [title]="msg.topbarTitle" [showBack]="true" (back)="goBack()" />
+
+  <div class="otp__content">
+    <h2 class="otp__heading">{{ msg.heading }}</h2>
+    <p class="otp__sent-to">{{ msg.sentToPrefix }}<strong>{{ state.email() }}</strong></p>
+
+    <ex-input-otp
+      class="otp__input"
+      [length]="8"
+      inputType="numeric"
+      [state]="state.fieldState()"
+      [ngModel]="state.code()"
+      (ngModelChange)="state.code.set($event)"
+      [attr.data-testid]="sel.input"
+    />
+
+    @if (state.error()) {
+      <ex-alert variant="error" class="otp__alert">{{ state.error() }}</ex-alert>
+    }
+
+    <div class="otp__meta">
+      <span>{{ msg.refPrefix }}{{ state.otpRef() }}</span>
+      <span>{{ msg.expiry(expiryMinutes) }}</span>
+    </div>
+
+    <button
+      type="button"
+      class="otp__resend"
+      [disabled]="!state.canResend()"
+      [attr.data-testid]="sel.resend"
+      (click)="state.resend()"
+    >
+      {{ state.canResend() ? msg.resend : msg.resendCooldown(state.remainingTime()) }}
+    </button>
+
+    <ex-button
+      class="otp__submit"
+      variant="primary"
+      width="100%"
+      [disabled]="state.code().length !== 8 || state.isLoading()"
+      [loading]="state.isLoading()"
+      [attr.data-testid]="sel.submitButton"
+      (click)="state.verify()"
+    >{{ msg.submitButton }}</ex-button>
+  </div>
+
+  <app-result-modal
+    [open]="state.exceededModal()"
+    variant="otp-exceeded"
+    [heading]="msg.exceededModal.heading"
+    [body]="msg.exceededModal.body"
+    [buttonText]="msg.exceededModal.button"
+    (confirm)="state.backToRegister()"
+    (closed)="state.backToRegister()"
+  />
+</div>
