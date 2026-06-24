@@ -1,0 +1,46 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Configure npm auth for @exim private registry
+        run: |
+          echo "@exim:registry=https://pkgs.dev.azure.com/eximth/_packaging/eximth/npm/registry/" > .npmrc
+          echo "always-auth=true" >> .npmrc
+          echo "//pkgs.dev.azure.com/eximth/_packaging/eximth/npm/registry/:_authToken=${{ secrets.AZURE_ARTIFACTS_TOKEN }}" >> .npmrc
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build (production)
+        run: npm run build
+
+      - name: Create Cloudflare Pages project (first run only)
+        uses: cloudflare/wrangler-action@v3
+        continue-on-error: true
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages project create onboarding-mobile --production-branch main
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist/onboarding-mobile/browser --project-name onboarding-mobile --branch main --commit-dirty=true
