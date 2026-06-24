@@ -1,0 +1,32 @@
+<div class="terms" [attr.data-testid]="sel.root">
+  <app-top-bar [title]="msg.topbarTitle" [showBack]="true" (back)="goBack()" />
+
+  <div class="terms__content">
+    <h2 class="terms__heading">{{ msg.heading }}</h2>
+
+    <div
+      #scrollEl
+      class="terms__scroll"
+      [attr.data-testid]="sel.scroll"
+      (scroll)="onScroll($event)"
+    >
+      @for (paragraph of msg.body; track $index) {
+        <p class="terms__paragraph">{{ paragraph }}</p>
+      }
+    </div>
+
+    @if (!state.scrolledToBottom()) {
+      <p class="terms__hint">{{ msg.hint }}</p>
+    }
+
+    <ex-button
+      class="terms__accept"
+      variant="primary"
+      width="100%"
+      [disabled]="!state.scrolledToBottom() || state.isLoading()"
+      [loading]="state.isLoading()"
+      [attr.data-testid]="sel.acceptButton"
+      (click)="state.accept()"
+    >{{ msg.acceptButton }}</ex-button>
+  </div>
+</div>
