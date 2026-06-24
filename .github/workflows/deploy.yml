@@ -19,10 +19,23 @@ jobs:
           node-version: '22'
 
       - name: Configure npm auth for @exim private registry
+        env:
+          AZ_PAT: ${{ secrets.AZURE_ARTIFACTS_TOKEN }}
         run: |
-          echo "@exim:registry=https://pkgs.dev.azure.com/eximth/_packaging/eximth/npm/registry/" > .npmrc
-          echo "always-auth=true" >> .npmrc
-          echo "//pkgs.dev.azure.com/eximth/_packaging/eximth/npm/registry/:_authToken=${{ secrets.AZURE_ARTIFACTS_TOKEN }}" >> .npmrc
+          # Azure Artifacts npm auth = base64(PAT) in _password (canonical format,
+          # for both the /registry/ and /npm/ paths). Store the RAW PAT in the secret.
+          B64=$(printf '%s' "$AZ_PAT" | base64 -w0)
+          {
+            echo "@exim:registry=https://pkgs.dev.azure.com/eximth/_packaging/eximth/npm/registry/"
+            echo "registry=https://registry.npmjs.org/"
+            echo "always-auth=true"
+            echo "//pkgs.dev.azure.com/eximth/_packaging/eximth/npm/registry/:username=eximth"
+            echo "//pkgs.dev.azure.com/eximth/_packaging/eximth/npm/registry/:_password=$B64"
+            echo "//pkgs.dev.azure.com/eximth/_packaging/eximth/npm/registry/:email=npm@exim.go.th"
+            echo "//pkgs.dev.azure.com/eximth/_packaging/eximth/npm/:username=eximth"
+            echo "//pkgs.dev.azure.com/eximth/_packaging/eximth/npm/:_password=$B64"
+            echo "//pkgs.dev.azure.com/eximth/_packaging/eximth/npm/:email=npm@exim.go.th"
+          } > .npmrc
 
       - name: Install dependencies
         run: npm install
